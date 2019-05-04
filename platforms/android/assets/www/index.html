@@ -1,0 +1,568 @@
+<!--
+Name: David Mackenzie
+Version: 1.0
+Created: 19/05/2017
+Cloud computing assignment
+Description: Phoenix Travel Mobile App
+-->
+
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+		-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+        <!-- stylesheet for jquery mobile -->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css">
+        <link rel="stylesheet" type="text/css" href="css/Bootstrap.min.css">
+
+        <style>
+        label.error {
+            float: left;
+            color: red;
+            padding-top: .5em;
+            vertical-align: top;
+            }
+
+            .page{
+                background-color:#436060;
+            }
+
+            .panel{
+                background-color:#436060;
+            }
+
+        </style>
+
+        <title>Phoenix Travel App</title>
+    </head>
+    <body>
+    <!--------------------------------Home Page My Trips------------------------------------------>
+        <div data-role="page" id="homepage" data-theme="b" class="page" >
+            <div data-role="panel" id="navPanel" data-display="overlay" data-theme="b" class="panel" >
+                <div data-role="heading">
+                    <h2>Menu</h2>
+                    <ul data-role="listview">
+                        <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                        <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                        <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                        <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                        <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                        <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                    </ul>
+                </div>
+             </div>
+            <div data-role="header" >
+            <h1 >Phoenix Travel</h1>
+            <a href="#navPanel" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+        </div>
+
+        <div data-role="content" >
+            <h1 style="text-align:center">My Trips</h1>
+            <ul data-role="listview" id="listMyTrips">
+
+            </ul>
+        </div>
+        <div data-role="footer" data-position="fixed">
+
+        </div>
+    </div>
+    <!--------------------------------Manage Account------------------------------------------>
+    <div data-role="page" id="page1" data-theme="b" class="page" >
+        <div data-role="panel" id="navPanel1" data-display="overlay" data-theme="b" class="panel"  >
+            <div data-role="heading">
+                <h2>Menu</h2>
+                <ul data-role="listview">
+                    <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                    <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                    <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                    <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                    <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                    <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="header" >
+            <h1>Manage User</h1>
+            <a href="#navPanel1" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+        </div>
+        <div data-role="content">
+            <form id="update">
+            <table>
+                <tr>
+                    <td><label for="txtFirstUpd">First name:</label></td>
+                    <td><input type="text" name="txtFirstUpd" id="txtFirstUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtInitialUpd">Initial:</label></td>
+                    <td><input type="text" name="txtInitialUpd" id="txtInitialUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtLastUpd">Last name:</label></td>
+                    <td><input type="text" name="txtLastUpd" id="txtLastUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtStreetNoUpd">Street No:</label></td>
+                    <td><input type="text" name="txtStreetNoUpd" id="txtStreetNoUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtStreetNameUpd">Address:</label></td>
+                    <td><input type="text" name="txtStreetNameUpd" id="txtStreetNameUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtSuburbUpd">Suburb:</label></td>
+                    <td><input type="text" name="txtSuburbUpd" id="txtSuburbUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPostcodeUpd">Postcode:</label></td>
+                    <td><input type="text" name="txtPostcodeUpd" id="txtPostcodeUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtEmailUpd">Email:</label></td>
+                    <td><input type="text" name="txtEmailUpd" id="txtEmailUpd"
+                               value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPhoneUpd">Phone:</label></td>
+                    <td><input type="text" name="txtPhoneUpd" id="txtPhoneUpd"
+                               value=""  /></td>
+                </tr>
+            </table>
+
+            <div style="text-align:center;">
+                <input type="submit" name="btnUpd" id="btnUpd"
+                       value="Update" data-inline="true" />
+                <input type="button" name="btnCancel" id="btnUpdCancel"
+                       value="Cancel" data-inline="true"  />
+            </div>
+            </form>
+        </div>
+        </div>
+        <div data-role="footer" data-position="fixed">
+
+        </div>
+    </div>
+
+    <!--------------------------------Search Tours Page------------------------------------------>
+    <div data-role="page" id="page2" data-theme="b" class="page">
+        <div data-role="panel" id="navPanel2" data-display="overlay" data-theme="b" class="panel"  >
+            <div data-role="heading">
+                <h2>Menu</h2>
+                <ul data-role="listview">
+                    <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                    <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                    <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                    <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                    <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                    <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="header" >
+            <h1>Tours</h1>
+            <a href="#navPanel2" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+        </div>
+        <div data-role="content">
+            <div>
+                <label for="selTour">Select a Tour</label>
+                <select id="selTour">
+
+                </select>
+
+                <div data-role="content" id="tourContent" name="tourContent">
+                    <p id="lblTourName" ></p>
+
+                    <p id="lblTourDescription" ></p>
+
+                    <p id="lblTourDuration" ></p>
+                </div>
+
+                <div data-role="content" id="itineraryContent" name="itineraryContent">
+                    <p id="lblItinerary"></p>
+                </div>
+
+                <div style="text-align:center;" id="tourButtons">
+                    <input type="button" name="btnGetTrips" id="btnGetTrips"
+                           value="Check dates" data-inline="true" />
+                    <input type="button" name="btnGetItinerary" id="btnGetItinerary"
+                           value="View itinerary" data-inline="true"  />
+                </div>
+            </div>
+
+        </div>
+        <div data-role="footer" data-position="fixed">
+
+        </div>
+    </div>
+    <!--------------------------------User Settings page------------------------------------------>
+    <div data-role="page" id="page3" data-theme="b" class="page">
+        <div data-role="panel" id="navPanel3" data-display="overlay" class="panel"  >
+            <div data-role="heading">
+                <h2>Menu</h2>
+                <ul data-role="listview">
+                    <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                    <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                    <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                    <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                    <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                    <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="header" >
+            <a href="#navPanel3" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+            <h1>Settings</h1>
+        </div>
+        <div data-role="content">
+            <div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend>Choose a theme:</legend>
+                        <input type="radio" name="rdoTheme" id="radA" value="A" checked="checked" />
+                        <label for="radA">A</label>
+
+                        <input type="radio" name="rdoTheme" id="radB" value="B"  />
+                        <label for="radB">B</label>
+
+                        <input type="radio" name="rdoTheme" id="radC" value="C"  />
+                        <label for="radC">C</label>
+
+                        <input type="radio" name="rdoTheme" id="radD" value="D"  />
+                        <label for="radD">D</label>
+                    </fieldset>
+                </div>
+            </div>
+            <div>
+                <label for="selFont">Font:</label>
+                <select id="selFont">
+                    <option>Arial</option>
+                    <option>Times New Roman</option>
+                </select>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed">
+
+        </div>
+    </div>
+    <!--------------------------------Change Password page------------------------------------------>
+    <div data-role="page" id="page4" data-theme="b" class="page">
+        <div data-role="panel" id="navPanel4" data-display="overlay" class="panel"  >
+            <div data-role="heading">
+                <h2>Menu</h2>
+                <ul data-role="listview">
+                    <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                    <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                    <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                    <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                    <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                    <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="header" >
+            <a href="#navPanel4" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+            <h1>Change Password</h1>
+        </div>
+        <div data-role="content">
+            <form id="password">
+                <table>
+                    <tr>
+                        <td><label for="txtCurrentPass">Current Password:</label></td>
+                        <td><input type="password" name="txtCurrentPass" id="txtCurrentPass"
+                                   value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtPass1">New Password:</label></td>
+                        <td><input type="password" name="txtPass1" id="txtPass1" value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtPass2">Re-type password:</label></td>
+                        <td><input type="password" name="txtPass2" id="txtPass2" value=""  /></td>
+                    </tr>
+                </table>
+
+            <div style="text-align:center;">
+                <input type="submit" name="btnUpdPass" id="btnUpdPass" value="Confirm"
+                       data-inline="true" />
+                <input type="button" name="btnUpdPassCancel" id="btnUpdPassCancel" value="Cancel"
+                       data-inline="true"/>
+            </div>
+            </form>
+        </div>
+
+        <div data-role="footer" data-position="fixed">
+        </div>
+    </div>
+
+    <!--------------------------------Create account------------------------------------------>
+    <div data-role="page" id="createAccount" data-theme="b" class="page">
+        <div data-role="panel" id="navPanel6" data-display="overlay" class="panel"  >
+            <div data-role="heading">
+                <h2>Menu</h2>
+                <ul data-role="listview">
+                    <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                    <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                    <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                    <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                    <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                    <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="header" >
+            <a href="#navPanel5" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+            <h1>Create Account</h1>
+        </div>
+        <div data-role="content">
+            <form id="register" >
+                <table>
+                 <tr>
+                     <td><label for="txtFirst">First name:</label></td>
+                     <td><input type="text" name="txtFirst" id="txtFirst" value=""  /></td>
+                 </tr>
+
+                <tr>
+                    <td><label for="txtInitial">Initial:</label></td>
+                    <td><input type="text" name="txtInitial" id="txtInitial" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtLast">Last name:</label></td>
+                    <td><input type="text" name="txtLast" id="txtLast" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtStreetNo">Street No:</label></td>
+                    <td><input type="text" name="txtStreetNo" id="txtStreetNo" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtStreetName">Street Name:</label></td>
+                    <td><input type="text" name="txtStreetName" id="txtStreetName" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtSuburb">Suburb:</label></td>
+                    <td><input type="text" name="txtSuburb" id="txtSuburb" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPostcode">Postcode:</label></td>
+                    <td><input type="text" name="txtPostcode" id="txtPostcode" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtEmail">Email:</label></td>
+                    <td><input type="text" name="txtEmail" id="txtEmail" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPhone">Phone:</label></td>
+                    <td><input type="text" name="txtPhone" id="txtPhone" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPassword">Password:</label></td>
+                    <td><input type="password" name="txtPassword" id="txtPassword" value=""  /></td>
+                </tr>
+                <tr>
+                    <td><label for="txtPassword2">Re-type password:</label></td>
+                    <td><input type="password" name="txtPassword2" id="txtPassword2" value=""  /></td>
+                </tr>
+            </table>
+
+            <div style="text-align:center;">
+                <input type="submit" name="btnCreate" id="btnCreate" value="Confirm" data-inline="true" />
+                <input type="button" name="btnCancel" id="btnCancel" value="Cancel" data-inline="true"  />
+            </div>
+            </form>
+         </div>
+
+        <div data-role="footer" data-position="fixed">
+
+        </div>
+    </div>
+    <!--------------------------------Trip information page---------------------------------------->
+        <div data-role="page" id="trip" data-theme="b" class="page">
+            <div data-role="panel" id="navPanel7" data-display="overlay" class="panel"  >
+                <div data-role="heading">
+                    <h2>Menu</h2>
+                    <ul data-role="listview">
+                        <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                        <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                        <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                        <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                        <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                        <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role="header" >
+                <a href="#navPanel7" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+                <h1>Trip</h1>
+            </div>
+            <div data-role="content">
+                <form id="bookTrip">
+                <table>
+                      <tr>
+                        <select id="selTrip" name="selTrip">
+                        </select>
+                    </tr>
+                    <tr>
+                        <td><label for="txtStandard">Amount of full fare passengers:</label></td>
+                        <td><input type="number" name="txtStandard" id="txtStandard" value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtConcession">Amount of Concession passengers:</label></td>
+                        <td><input type="number" name="txtConcession" id="txtConcession" value=""  /></td>
+                    </tr>
+                  </table>
+                    <div style="text-align:center;" id="TripButton">
+                        <input type="submit" name="btnBookTrip" id="btnBookTrip"
+                               value="Book Trip" data-inline="true"/>
+                        <input type="button" name="btnBookBack" id="btnBookBack"
+                               value="Back To Tours" data-inline="true" />
+                    </div>
+                </form>
+            </div>
+                <div data-role="footer" data-position="fixed">
+                </div>
+            </div>
+    <!--------------------------------Review trip page---------------------------------------->
+        <div data-role="page" id="review" data-theme="b" class="page">
+            <div data-role="panel" id="navPanel8" data-display="overlay" class="panel"  >
+                <div data-role="heading">
+                    <h2>Menu</h2>
+                    <ul data-role="listview">
+                        <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                        <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                        <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                        <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                        <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                        <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role="header" >
+                <a href="#navPanel8" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+                <h1>Trip</h1>
+            </div>
+            <div data-role="content">
+                <h1 style="text-align:center">Review a trip</h1>
+                <form id="reviewTrip">
+                    <table>
+                        <tr>
+                            <label for="selReviewTrip">Select Trip:</label>
+                            <select id="selReviewTrip" name="selReviewTrip">
+                            </select>
+                        </tr>
+                        <tr>
+                            <label for="selRating">Rating:</label>
+                            <select id="selRating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </tr>
+                        <tr>
+                            <td><label for="txtLikes">Likes:</label></td>
+                            <td><textarea name="txtLikes" id="txtLikes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="txtDislikes">Dislikes:</label></td>
+                            <td><textarea name="txtDislikes" id="txtDislikes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="txtGeneral">General Feedback:</label></td>
+                            <td><textarea name="txtGeneral" id="txtGeneral"></textarea></td>
+                        </tr>
+                    </table>
+                    <div style="text-align:center;">
+                        <input type="submit" name="btnSaveReview" id="btnSaveReview"
+                               value="Save" data-inline="true" />
+                        <input type="button" name="btnCancelReview" id="btnCancelReview"
+                               value="Cancel" data-inline="true"/>
+                    </div>
+                </form>
+
+            </div>
+
+            <div data-role="footer" data-position="fixed">
+            </div>
+        </div>
+
+    <!--------------------------------Itinerary page---------------------------------------->
+        <div data-role="page" id="itinerary" data-theme="b"  class="page">
+            <div data-role="panel" id="navPanel9" data-display="overlay" class="panel" >
+                <div data-role="heading">
+                    <h2>Menu</h2>
+                    <ul data-role="listview">
+                        <li><a href="#homepage" class="ui-btn ui-icon-none" >Home</a></li>
+                        <li><a href="#page1" class="ui-btn ui-icon-none" >Account</a></li>
+                        <li><a href="#page2" class="ui-btn ui-icon-none">Tours</a></li>
+                        <li><a href="#page3" class="ui-btn ui-icon-none">Settings</a></li>
+                        <li><a href="#page4" class="ui-btn ui-icon-none">Change Password</a></li>
+                        <li><a href="#review" class="ui-btn ui-icon-none">Review Trip</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role="header" >
+                <a href="#navPanel9" data-role="button" class="ui-btn-left" data-theme="a">Menu</a>
+                <h1>Itinerary</h1>
+            </div>
+            <div data-role="content">
+                <h1 style="text-align:center">Itinerary</h1>
+                <ul data-role="listview" id="listItinerary">
+                </ul>
+            </div>
+
+            <div style="text-align:center;" id="ItineraryButtons">
+                <input type="button" name="btnItineraryBack" id="btnItineraryBack"
+                       value="Back To Tours" />
+            </div>
+
+            <div data-role="footer" data-position="fixed">
+            </div>
+        </div>
+    <!-- jquery javascript -->
+    <script src="jQuery/jquery-1.11.1.js"></script>
+    <script src="jQuery/jquery.mobile-1.4.5.min.js"></script>
+    <script src="jQuery/jquery.validate.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="js/main.js"></script><!--Main js Scripts-->
+
+    </body>
+</html>

@@ -1,0 +1,45 @@
+//Assignment Part 2
+//Get all tours
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/tours
+
+//Get all trips
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/trips
+
+//Get all trips for a customer
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/trips/000001
+
+//Get itinerary for a tour
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/tour/itinerary/055
+
+//Search for available trips
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/trips/search/055
+
+//Search for a tour that is booked out
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/trips/search/021
+
+//Add a customer booking
+curl -i -X POST -H "Content-Type: application/json" -d '{"Trip_Id":"102005","Customer_Id":"36","Num_Concessions":"10","Num_Adults":"10"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/addBooking
+
+//Add a customer record
+curl -i -X POST -H "Content-Type: application/json" -d '{"first_name":"Bob","middle_initial":"A","last_name":"Builder","street_no":"10","street_name":"Fake Street","suburb":"Fakesville","postcode":"3000","email":"bbuilder@gmail.com","phone":"0395462187","enabled":"0","password":"tafe123"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/addCustomer
+
+//Add a customer record
+curl -i -X POST -H "Content-Type: application/json" -d '{"Customer_Id":"000002","First_Name":"Mary","Middle_Initial":"A","Last_Name":"Jane","Street_No":"1234","Street_Name":"Station Street","Suburb":"Fakesville","Postcode":"3000","Email":"mj@gmail.com","Phone":"0395884657","Enabled":"0","Password":"tafe123"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/addCustomer
+
+//Get customer details
+curl -i -X POST -H "Content-Type: application/json" -d {"Customer_Id":"000011"} http://localhost:8888/sites/AssignmentV2/index.php/customer/getDetails
+
+//Update customer record
+curl -i -X PUT -H "Content-Type: application/json" -d '{"Customer_Id":"000001","First_Name":"Bobby","Middle_Initial":"A","Last_Name":"Builder","Street_No":"10","Street_Name":"Fake Street","Suburb":"Fakesville","Postcode":"3000","Email":"bbuilder@gmail.com","Phone":"0395462187"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/updateCustomer
+
+//Review a trip
+curl -i -X POST -H "Content-Type: application/json" -d '{"Trip_Id":"343271","Customer_Id":"000001","Rating":"3","General_Feedback":"Too short","Likes":"Friendly staff","Dislikes":"Bus Broke down too many times"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/addReview
+
+//Book a trip
+curl -i -X POST -H "Content-Type: application/json" -d '{"Trip_Booking_No":"008050","Customer_Id":"67","Num_Concessions":"2","Num_Adults":"2"}' http://localhost:8888/sites/AssignmentV2/index.php/customer/addBooking
+
+//Get bookings for a customer
+curl -i -X GET http://localhost:8888/sites/AssignmentV2/index.php/trips/37
+
+
+

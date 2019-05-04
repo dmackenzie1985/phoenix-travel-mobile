@@ -1,0 +1,6 @@
+SELECT t.Trip_Id, t.Tour_No, t.Rego_No, t.Departure_Date, t.Passengers_Booked, t.Max_Passengers,t.Standard_Amount,t.Concession_Amount 
+FROM trips as t, customer_bookings as cb,  trip_bookings as tb, customers as c  
+WHERE c.Customer_Id = cb.Customer_Id
+AND cb.Trip_Booking_No = tb.Trip_Booking_No
+AND tb.Trip_Id = t.Trip_Id
+AND c.Customer_Id = 000001
